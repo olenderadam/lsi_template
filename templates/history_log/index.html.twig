@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HistoryLog index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Raport</h1>
+		<div class="row">
+			<div class="col-md-4">
+				{{ include('history_log/_form_search.html.twig', {'button_label': 'Zapisz'}) }}				
+			</div>
+			<div class="col-md-8">
+				<table class="table table-bordererd">
+					<thead>
+						<tr>
+							<th>Nazwa</th>
+							<th>Data</th>
+							<th>Godzina</th>
+							<th>Użytkownik</th>
+							<th>Lokal</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for history_log in history_logs %}
+							<tr>
+								<td>{{ history_log.exportName }}</td>
+								<td>{{ history_log.exportDate ? history_log.exportDate|date('Y-m-d') : '' }}</td>
+								<td>{{ history_log.exportDate ? history_log.exportDate|date('H:i') : '' }}</td>
+								<td>{{ history_log.userName }}</td>
+								<td>{{ history_log.location }}</td>
+								<td>
+									<a class="btn btn-info" href="{{ path('app_history_log_show', {'id': history_log.id}) }}">show</a>
+									<a class="btn btn-default" href="{{ path('app_history_log_edit', {'id': history_log.id}) }}">edit</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="6">no records found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<a class="btn btn-success" href="{{ path('app_history_log_new') }}">Dodaj nowy</a>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
